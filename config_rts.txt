@@ -1,0 +1,66 @@
+# config file for jupyter descriptive statistics
+
+# enter information about the conditions below
+# every condition needs to be on a new line
+# the format is the following:
+# <condName>; <columnName>: <columnValue(s)>
+#
+# <condName>: a condition name chosen by you (please only use letters and underscores)
+# <columnName>: this needs to match the column name in the PsychoPy csv output files
+# <columnValue(s)>: this needs to match one or more values in the corresponding column
+#
+# lines beginning with # are comments and will be ignored
+# 
+# e.g., get RTs for switch and repeat trials:
+# switchAll; trlType: switch
+# repeatAll; trlType: repeat
+#
+# if a condition is defined by multiple columns, add more columns:
+#  <condName>; <columnName>: <columnValue(s)>; <columnName>: <columnValue(s)>
+# e.g., get RTs for *correct* (assuming 1 means correct) switch and repeat trials
+# switch; trlType: switch; response.corr: 1
+# repeat; trlType: repeat; response.corr: 1
+#
+# please note that the column names need to match the column names in the PsychoPy output file*
+# e.g., if your accuracy column were called response.corr, you need to write:
+# switch; trlType: switch; response.corr: 1
+# e.g., correct switch trials from the short CTI:
+# switchShort; trlType: switch; cti: short; response.corr: 1
+#
+# *there is one exception to this rule: column names must not include hyphens;
+# if your column names do include hyphens, replace them by underscores when you define your conditions below
+# (you do not need to replace them in the PsychoPy output files)
+#
+#
+# separators are relevant
+# - use semicolons to separate condition names and relevant columns
+# - use colons to separate column names from column values
+# - use commas to separate multiple values
+#   - e.g.: switch; trlType: switch; response.corr: 1,2
+#
+# 
+# note that the default comparison operator is "equal"
+# i.e., "accuracy: 2" means a trial will be included if the accuracy equals 2
+# however, you can define other comparison operators; these are:
+# >, <, >=, <=, !=
+# these alternative comparison operators require the following syntax:
+# <columnName>: [operator]<columnValue>
+# e.g.: "response.rt: [>]0.4" would only include RTs longer than 0.4 s
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
