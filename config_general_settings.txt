@@ -1,0 +1,97 @@
+# define general settings
+
+# comments need to be preceded by a #-sign
+
+# what are the relevant column headers in the output file? (make sure to put quotes around column names)
+# the participant code is in a column called...?
+participantColumn = "participant"  # set to None (without quotes) if column does not exist
+
+# is there information not related to performance in the input file that you would like to be present in the output file?
+# e.g., from the startup dialogue (age, gender, etc.)
+# if there are columns to keep, use this format: keepColumns = ["age", "gender"]
+# if there are none, use this: keepColumns = []
+keepColumns = []
+
+# what is the loop around your main trials called?
+trialsLoop = "trials"  # set to None (without quotes) if column does not exist
+
+# the RTs are in a column called...?
+rtColumn = "response.rt"
+
+# accuracy is coded in a column called...?
+accColumn = "accuracy"
+
+# what is the code for a correct response?
+correct = 1
+# what is the code for an incorrect response?
+incorrect = 0
+
+# measure of central tendency (moct) to be included in the output
+# 1 = mean
+# 2 = median
+moctType = 1
+
+# should RTs below a specific threshold be rejected? (this will be done before rejecting outliers or computing measures of central tendency)
+# 0 = no
+# 1 = yes
+rejectBelow = 1
+# what is the threshold? (please specify in *seconds*)
+rejectBelowTime = 0.15
+
+# should RTs above a specific threshold be rejected? (this will be done before rejecting outliers or computing measures of central tendency)
+# 0 = no
+# 1 = yes
+rejectAbove = 1
+# what is the threshold? (please specify in *seconds*)
+rejectAboveTime = 2.0
+
+# define outlier rejection for mean computation
+# note that this will reject outlier RTs per condition per subject
+# 0 = none
+# 1 = based on standard deviations
+# 2 = based on percentage of extreme values ("trimmed mean", e.g. http://www.oswego.edu/~srp/stats/tr_mean.htm)
+#     - e.g., reject the 20% lowest and highest values
+# 3 = median absolute deviation (MAD; e.g., Leys et al., 2013, J Exp Soc Psychol)
+rejType = 3
+
+# if rejType is 1, 2 or 3, also specify the threshold
+# note that the value will be interpreted based on the setting for rejType
+# for rejType = 1: rejValue is a multiplier for the SD
+#   typical values: 2 or 3 SDs
+# for rejType = 2: rejValue is % (e.g., 20 will remove 20% of the values *on each side* of the distribution)
+#   typical value: 20%
+# for rejType = 3: rejValue is a multiplier for the MAD
+#   typical values: 3 (very conservative), 2.5 (moderately conservative) or 2 (poorly conservative)
+rejValue = 2.5
+
+# exclude conditions with too few trials?
+# e.g., you could exclude a condition if there are fewer than, say, 10 trials
+# exclusion will be done for each condition and subject separately (and after the removal of extreme values)
+# 0 = no
+# 1 = yes
+tooFewTrials = 1
+# how many is too few?
+tooFewTrialsNr = 4
+
+# should RTs be converted to ms (instead of s)?
+# 0 = no
+# 1 = yes
+convertToMs = 1
+
+# plot RT histograms in Markdown report file?
+# 0 = no
+# 1 = yes
+# note: not plotting is considerably faster
+plotting = 0
+
+# range for plotting RTs in output figures (in seconds)
+fromRT = 0.2
+toRT = 2
+# nr of bins to plot
+nrOfBins = 20
+
+# do you also want to compute error rates?
+# note that this requires a config file called config_errors.txt
+# 0 = no
+# 1 = yes
+computeErrorRates = 0
