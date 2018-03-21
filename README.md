@@ -19,7 +19,7 @@ A Jupyter notebook for computing individual RTs and error rates, and collating t
 
 BerryPy reads input files produced by an experiment control programme (e.g., [PsychoPy](http://www.psychopy.org/)), and produces a .csv output file that can be imported into SPSS or other statistical software packages.
 
-BerryPy looks for its input files in the folder `input`, and writes its output to the folder `output`.
+BerryPy looks for its input files in the folder `input` (located in the same folder as the notebook itself), and writes its output to the folder `output`.
 
 ## Aims and objectives
 
