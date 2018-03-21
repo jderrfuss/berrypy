@@ -56,7 +56,7 @@ BerryPy uses three configuration text files to produce its output.
 
 - Name and define conditions for output file
 - Basic syntax:
-    - `<columnName>: [operator]<columnValue>`, where `<columnName>` is the column name in the input file (e.g., `response.corr`) and `<columnValue>` is the value (e.g., `0` for incorrect)
+    - `<columnName>: [operator]<columnValue>`, where `<columnName>` is the column name in the input file (e.g., `response.corr`) and `<columnValue>` is the value (e.g., `0` for incorrect)
 - Operators
     - equal (default): `=`
     - does not equal: `!=`
