@@ -43,17 +43,23 @@ Visualise individual data | Creates Markdown output file with RT distributions a
 
 ## How does it work?
 
-BerryPy uses three configuration text files to produce its output.
+1. Add .csv files to folder `input`
+2. Edit configuration files
+3. Run notebook
+4. Find results in folder `output`
 
-### File 1: General settings
+## The configuration files
+### General settings
 
-- Info about relevant column names in input (e.g. "response.corr" for accuracy of response)
-- Thresholds for extreme values (e.g., exclude anything below 100 ms and above 2000 ms)
-- Measure of central tendency (i.e., mean or median)
-- Outlier rejection: SD, trimmed mean, median absolute deviation
+- File name: `config_general_settings.txt`
+- Contains info about relevant column names in input files (e.g. `response.corr` for accuracy of response)
+- Used to set thresholds for extreme values (e.g., exclude anything below 100 ms and above 2000 ms)
+- Used to define measure of central tendency (i.e., mean or median)
+- Used for outlier rejection: SD, trimmed mean, median absolute deviation
 
-### File 2: RT analysis
+### RT analysis
 
+- File name: `config_rts.txt`
 - Name and define conditions for output file
 - Basic syntax:
     - `<columnName>: [operator]<columnValue>`, where `<columnName>` is the column name in the input file (e.g., `response.corr`) and `<columnValue>` is the value (e.g., `0` for incorrect)
@@ -65,8 +71,9 @@ BerryPy uses three configuration text files to produce its output.
     - above: `>`
     - above or equal: `>=`
 
-### File 3: Error analysis
+### Error analysis
 
+- File name: `config_errors.txt`
 - Same syntax rules and operators as for RTs
 - Major difference: need to define ratio using `/`
   - Basic syntax: `<trialsOfInterest>/<allTrials>`
@@ -96,7 +103,7 @@ Please note that the measure of central tendency and the name of the RT column n
 **Example content of RT configuration file**
 
 ```
-# mean congruent and incongruent RTs for correct trials only
+# compute mean congruent and incongruent RTs for correct trials only
 # conRT and inconRT will be the column headers in the output file
 # not necessary to add default operator equal
 conRT; condition: congruent; response.corr: 1
