@@ -8,6 +8,20 @@
 
 A Jupyter notebook for computing individual RTs and error rates, and collating these data across participants.
 
+## What is needed to run BerryPy?
+
+* Jupyter Notebook (Python 2.7)
+* shutil
+* numpy
+* pandas
+* glob
+* os
+* errno
+* re
+* matplotlib
+* seaborn
+* sys
+
 ## What can BerryPy do?
 
 - Reject extreme values (below/above a given RT threshold)
@@ -37,25 +51,37 @@ Visualise individual data | Creates Markdown output file with RT distributions a
 
 ## Limitations
 
-- Works best with [PsychoPy](http://www.psychopy.org/) output files
-  - BerryPy expects the input files to have a header
-  - BerryPy expects one trial per line
+BerryPy works best with standard [PsychoPy](http://www.psychopy.org/) output files. For example:
 
-## How does it work?
+- BerryPy expects the input files to have a header
+- BerryPy expects one trial per line
 
-1. Add .csv files to folder `input`
-2. Edit configuration files
-3. Run notebook
-4. Find results in folder `output`
+All of this can of course be adapted, but this will require some Python knowledge.
+
+## How does BerryPy work?
+
+Please note that the description below assumes that you know how to open a Jupyter notebook.
+
+1. Download and unzip BerryPy. Change your working directory to the newly created BerryPy folder.
+1. Add raw data to the folder `input` (by default, BerryPy expects .csv files, but this can be changed in the notebook)
+1. Edit configuration files (see below for details)
+1. Open the notebook
+1. Use `Cell` &rarr; `Run All` to run the notebook
+1. Results are written to the folder `output` (details below)
+
+Please note that there will be no centrally installed BerryPy package. If you have folders for your various projects, it probably makes most sense to make BerryPy a subfolder of a given project.
 
 ## The configuration files
+
+Note that the configuration files address the most common options. If the analysis needs to go beyond these options, extra functions can be added to the notebook (the notebook contains an example function that has been commented out to illustrate this).
+
 ### General settings
 
 - File name: `config_general_settings.txt`
 - Contains info about relevant column names in input files (e.g. `response.corr` for accuracy of response)
-- Used to set thresholds for extreme values (e.g., exclude anything below 100 ms and above 2000 ms)
-- Used to define measure of central tendency (i.e., mean or median)
-- Used for outlier rejection: SD, trimmed mean, median absolute deviation
+- Set thresholds for extreme values (e.g., exclude anything below 100 ms and above 2000 ms)
+- Define measure of central tendency (i.e., mean or median)
+- Outlier rejection using SD, trimmed mean, or median absolute deviation
 
 ### RT analysis
 
@@ -75,7 +101,7 @@ Visualise individual data | Creates Markdown output file with RT distributions a
 
 - File name: `config_errors.txt`
 - Same syntax rules and operators as for RTs
-- Major difference: need to define ratio using `/`
+- Major difference to RT configuration file: need to define ratio using `/`
   - Basic syntax: `<trialsOfInterest>/<allTrials>`
 
 ## Examples
@@ -150,3 +176,7 @@ inconAcc_highVis; condition: incongruent; response.corr: 1/0,1; stimVisibility: 
   * It provides information about the distribution of RTs
   * It tells you how many trials were rejected as outliers
 * You can view the Markdown output file using a dedicated Markdown viewer, or a Markdown extension for your browser
+
+## Bugs and improvements
+
+I can't guarantee that BerryPy contains no bugs. If you find one, please let me/GitHub know. The same goes for suggestions for improvement.
