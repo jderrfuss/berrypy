@@ -18,9 +18,8 @@ trialsLoop = "trials"  # set to None (without quotes) if column does not exist
 # the RTs are in a column called...?
 rtColumn = "response.rt"
 
-# accuracy is coded in a column called...?
+# accuracy is coded in a column called...? -> only used for basic sanity check
 accColumn = "accuracy"
-
 # what is the code for a correct response?
 correct = 1
 # what is the code for an incorrect response?
