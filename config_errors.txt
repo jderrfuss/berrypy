@@ -1,41 +1,75 @@
-# define conditions for which to calculate error rates
-# you need to specify (a) which values constitute errors and (b) which values constitute all trials
-#
-# enter information about the conditions below
+# Error config file for BerryPy
+
+###########
+# General #
+###########
+
 # every condition needs to be on a new line
 # the format is the following:
 # <condName>; <columnName>: <columnValue(s)>
 #
-# <condName>: a condition name chosen by you (please only use letters and underscores)
-# <columnName>: this needs to match the column name in the PsychoPy csv output files
+# <condName>: a condition name chosen by you (please only use letters, numbers and underscores; do not start with a number)
+# <columnName>: a column name from the PsychoPy csv output files
 # <columnValue(s)>: this needs to match one or more values in the corresponding column
+#
+# if a condition is defined by multiple columns, add more columns:
+#  <condName>; <columnName>: <columnValue(s)>; <columnName>: <columnValue(s)>
 #
 # lines beginning with # are comments and will be ignored
 #
-# let's assume we have two types of values in the accuracy column
+# separators are relevant
+# - use semicolons to separate condition names and relevant columns
+# - use colons to separate column names from column values
+# - use commas to separate multiple values (these values will be combined using a logical OR)
+#   - e.g.: switch; trlType: switch; response.corr: 1,2
+# spaces are not relevant
+#
+# note that the default comparison operator is equal (==)
+# i.e., "response.corr: 1" means a trial will be included if the accuracy equals 1
+# however, you can define other comparison operators; these are:
+# >, <, >=, <=, !=
+# these alternative comparison operators require the following syntax:
+# <columnName>: [operator]<columnValue>
+# e.g.: "trials.thisN: [>=]10" would exclude the first 10 trials (i.e., trials 0 to 9)
+# do *not* use these operators in combination with multiple values: 
+# e.g.: "trials.thisN: [>=]10, [<=]100"  # no!
+
+##########################
+# Accuracies/error rates #
+##########################
+
+# you need to specify (a) which values form the numerator and (b) which values form the denominator
+#
+# Let's assume we have two types of values in the accuracy column
 # 0 = incorrect response
 # 1 = correct response
-# To calculate the percentage of incorrect responses, you would write:
-# (...); response.corr: 0/0,1; (...)
+# To calculate the percentage of incorrect responses:
+# (...); response.corr: 0/0,1
 # Note the forward slash! This is crucial and needs to be there!
 #
-# let's assume we have three types of values in the accuracy column
+# Let's assume we have three types of values in the accuracy column
 # 0 = timeout (no response)
 # 1 = incorrect response
 # 2 = correct response
-# To calculate the percentage of incorrect responses, you would write:
-# (...); response.corr: 1/0,1,2; (...)
-# To calculate the total error rate (timeouts + incorrect responses), you would write:
-# (...); response.corr: 0,1/0,1,2; (...)
+# To calculate the percentage of incorrect responses:
+# errorRate; response.corr: 1/0,1,2
+# To calculate the total error rate (timeouts + incorrect responses):
+# errorRateTotal; response.corr: 0,1/0,1,2
+
+#######################
+# String-based ratios #
+#######################
+
+# the values provided can also be strings, allowing the computation of ratios more generally
 #
-# By default, PsychoPy distinguishes only error and correct trials:
-# 0 = error
-# 1 = correct
-#
-# By default, the PsychoPy name for the column with accuracy information is response.corr
+# Let's assume we have two types of congruency in a column called "congruency"
+# con = congruent trial
+# incon = incongruent trial
+# To calculate the percentage of congruent trials:
+# percentCongr; congruency: con/con,incon
 
-
-
+#########################
+# define conditions here:
 
 
 

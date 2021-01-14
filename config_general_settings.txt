@@ -1,4 +1,4 @@
-# define general settings
+# define general settings for BerryPy
 
 # comments need to be preceded by a #-sign
 
@@ -12,23 +12,72 @@ participantColumn = "participant"  # set to None (without quotes) if column does
 # if there are none, use this: keepColumns = []
 keepColumns = []
 
+# are there participants whose data should be excluded from the output file?
+# make sure participant codes are strings, even if the code is a number
+# e.g.: rejectSubj = ["3", "18"]
+rejectSubj = []
+
+# do you want to compute mean or median RTs, or sums?
+# note that this requires a config file called config_errors.txt
+# 0 = no
+# 1 = yes
+computeRts = 1
+
+# do you want to compute error rates?
+# note that this requires a config file called config_errors.txt
+# 0 = no
+# 1 = yes
+computeErrorRates = 1
+
 # what is the loop around your main trials called?
 trialsLoop = "trials"  # set to None (without quotes) if column does not exist
 
+# exclude conditions with too few trials?
+# e.g., you could exclude a condition if there are fewer than, say, 10 trials
+# exclusion will be done for each condition and subject separately (and after the removal of extreme values)
+# 0 = no
+# 1 = yes
+tooFewTrials = 1
+# how many is too few?
+tooFewTrialsNr = 4
+
+# should RTs be converted to ms (instead of s)?
+# 0 = no
+# 1 = yes
+convertToMs = 1
+
+################################
+# Info for basic sanity checks #
+################################
+
 # the RTs are in a column called...?
-rtColumn = "response.rt"
+rtColumn = "trialResp.rt"  # set to None (without quotes) if column does not exist
 
 # accuracy is coded in a column called...? -> only used for basic sanity check
-accColumn = "accuracy"
+accColumn = "trialResp.corr"  # set to None (without quotes) if column does not exist
 # what is the code for a correct response?
 correct = 1
 # what is the code for an incorrect response?
 incorrect = 0
 
-# measure of central tendency (moct) to be included in the output
-# 1 = mean
-# 2 = median
-moctType = 1
+# plot RT histograms in Markdown report file?
+# 0 = no
+# 1 = yes
+# note: not plotting is considerably faster
+plotting = 1
+
+# range for plotting RTs in output figures (in seconds)
+fromRT = 0.2
+toRT = 4
+# nr of bins to plot
+nrOfBins = 20
+
+##################
+# Extreme values #
+##################
+
+# trials with extreme values are excluded before any other calculations
+# thus, they do not contribute to error rates
 
 # should RTs below a specific threshold be rejected? (this will be done before rejecting outliers or computing measures of central tendency)
 # 0 = no
@@ -42,7 +91,14 @@ rejectBelowTime = 0.15
 # 1 = yes
 rejectAbove = 1
 # what is the threshold? (please specify in *seconds*)
-rejectAboveTime = 2.0
+rejectAboveTime = 4.0
+
+##################
+# Outlier values #
+##################
+
+# outlier trials are rejected for RT analyses only
+# the accuracy for these trials is taken into account for error rate calculations
 
 # define outlier rejection for mean computation
 # note that this will reject outlier RTs per condition per subject
@@ -63,34 +119,5 @@ rejType = 3
 #   typical values: 3 (very conservative), 2.5 (moderately conservative) or 2 (poorly conservative)
 rejValue = 2.5
 
-# exclude conditions with too few trials?
-# e.g., you could exclude a condition if there are fewer than, say, 10 trials
-# exclusion will be done for each condition and subject separately (and after the removal of extreme values)
-# 0 = no
-# 1 = yes
-tooFewTrials = 1
-# how many is too few?
-tooFewTrialsNr = 4
 
-# should RTs be converted to ms (instead of s)?
-# 0 = no
-# 1 = yes
-convertToMs = 1
 
-# plot RT histograms in Markdown report file?
-# 0 = no
-# 1 = yes
-# note: not plotting is considerably faster
-plotting = 0
-
-# range for plotting RTs in output figures (in seconds)
-fromRT = 0.2
-toRT = 2
-# nr of bins to plot
-nrOfBins = 20
-
-# do you also want to compute error rates?
-# note that this requires a config file called config_errors.txt
-# 0 = no
-# 1 = yes
-computeErrorRates = 0

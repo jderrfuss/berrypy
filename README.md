@@ -10,7 +10,7 @@ A Jupyter notebook for computing individual RTs and error rates, and collating t
 
 ## What is needed to run BerryPy?
 
-* Jupyter Notebook (Python 2.7)
+* Jupyter Notebook (Python 3.x)
 * shutil
 * numpy
 * pandas
@@ -69,7 +69,7 @@ Please note that the description below assumes that you know how to open a Jupyt
 1. Use `Cell` &rarr; `Run All` to run the notebook
 1. Results are written to the folder `output` (details below)
 
-Please note that there will be no centrally installed BerryPy package. If you have folders for your various projects, it probably makes most sense to make BerryPy a subfolder of a given project.
+Please note that there will be no centrally installed BerryPy package. Instead, add BerryPy to each project folder.
 
 ## The configuration files
 
@@ -79,14 +79,16 @@ Note that the configuration files address the most common options. If the analys
 
 - File name: `config_general_settings.txt`
 - Contains info about relevant column names in input files (e.g. `response.corr` for accuracy of response)
-- Set thresholds for extreme values (e.g., exclude anything below 100 ms and above 2000 ms)
-- Define measure of central tendency (i.e., mean or median)
+- Set thresholds for extreme values (e.g., exclude anything below 100 ms and above 4000 ms)
 - Outlier rejection using SD, trimmed mean, or median absolute deviation
+- Option to list IDs of participants to exclude from analysis
+- Option to define columns that should be kept for the output file (e.g., age or gender)
 
 ### RT analysis
 
 - File name: `config_rts.txt`
 - Name and define conditions for output file
+- Define measure of central tendency (i.e., mean or median)
 - Basic syntax:
     - `<columnName>: [operator]<columnValue>`, where `<columnName>` is the column name in the input file (e.g., `response.corr`) and `<columnValue>` is the value (e.g., `0` for incorrect)
 - Operators
@@ -124,30 +126,32 @@ incongruent | 1 | 0.484 | 99 | low | centre
 
 ### RT analysis
 
-Please note that the measure of central tendency and the name of the RT column need to be specified in the general settings file.
-
 **Example content of RT configuration file**
 
 ```
 # compute mean congruent and incongruent RTs for correct trials only
 # conRT and inconRT will be the column headers in the output file
 # not necessary to add default operator equal
-conRT; condition: congruent; response.corr: 1
-inconRT; condition: incongruent; response.corr: 1
+conRT; condition: congruent; response.corr: 1; onColumn: response.rt; measure: mean
+inconRT; condition: incongruent; response.corr: 1; onColumn: response.rt; measure: mean
 
 # as above, but exclude the first 20 trials (i.e., trial numbers 0 to 19)
-conRT; condition: congruent; response.corr: 1; trials.thisN: [>=]20
-inconRT; condition: incongruent; response.corr: 1; trials.thisN: [>=]20
+conRT; condition: congruent; response.corr: 1; trials.thisN: [>=]20; onColumn: response.rt; measure: mean
+inconRT; condition: incongruent; response.corr: 1; trials.thisN: [>=]20; onColumn: response.rt; measure: mean
 
 # mean con RTs separately for low and high visibility trials
-conRT_lowVis; condition: congruent; response.corr: 1; stimVisibility: low
-conRT_highVis; condition: congruent; response.corr: 1; stimVisibility: high
+conRT_lowVis; condition: congruent; response.corr: 1; stimVisibility: low; onColumn: response.rt; measure: mean
+conRT_highVis; condition: congruent; response.corr: 1; stimVisibility: high; onColumn: response.rt; measure: mean
 
 # mean con RTS for lateralised stimuli
-conRT_lateral; condition: congruent; response.corr: 1; stimLocation: left,right
+conRT_lateral; condition: congruent; response.corr: 1; stimLocation: left,right; onColumn: response.rt; measure: mean
 
 # alternatively
-conRT_lateral; condition: congruent; response.corr: 1; stimLocation: [!=]centre
+conRT_lateral; condition: congruent; response.corr: 1; stimLocation: [!=]centre; onColumn: response.rt; measure: mean
+
+# to compute medians instead of means
+conRT; condition: congruent; response.corr: 1; onColumn: response.rt; measure: median
+inconRT; condition: incongruent; response.corr: 1; onColumn: response.rt; measure: median
 ```
 
 ### Error analysis
@@ -168,6 +172,13 @@ conAcc_highVis; condition: congruent; response.corr: 1/0,1; stimVisibility: high
 inconAcc_highVis; condition: incongruent; response.corr: 1/0,1; stimVisibility: high
 ```
 
+The values provided can also be strings, allowing the computation of ratios more generally:
+
+```
+# calculate the percentage of congruent trials
+percentCongr; congruency: congruent/congruent,incongruent
+```
+
 ## The output
 
 * In the folder `output`, there will be a file called `output.csv`: This file contains the means or medians (dependent on what you chose in the general settings file) and error rates (if you asked for them) for every participant and condition
@@ -176,7 +187,3 @@ inconAcc_highVis; condition: incongruent; response.corr: 1/0,1; stimVisibility: 
   * It provides information about the distribution of RTs
   * It tells you how many trials were rejected as outliers
 * You can view the Markdown output file using a dedicated Markdown viewer, or a Markdown extension for your browser
-
-## Bugs and improvements
-
-I can't guarantee that BerryPy contains no bugs. If you find one, please let me/GitHub know. The same goes for suggestions for improvement.
